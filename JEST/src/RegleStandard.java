@@ -151,10 +151,10 @@ public class RegleStandard implements Regle {
 	}
 	
 	public void declareGagnant(List<Joueur> tabJoueur) {
-		int max =0;
 		int i = 0;
 		int rank = 1;
 		do {
+            int max =0;
 			for(Joueur j : tabJoueur) {
 				if(max <= j.score) {
 					max  = j.score;

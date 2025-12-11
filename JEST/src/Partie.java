@@ -20,6 +20,22 @@ public class Partie{
 				reglePartie = new RegleStandard();
 				reglePartie.deroulementPartie(tabJoueur, paquet);
 				break;
+			case 2:
+				tabJoueur.add(new JoueurPhysique(nom));
+				for(int i =1; i < nbrJoueur; i++) {
+					tabJoueur.add(new JoueurVirtuel("IA-"+i, difficulte));
+				}
+				reglePartie = new RegleSpecial01();
+				reglePartie.deroulementPartie(tabJoueur, paquet);
+				break;
+			case 3:
+				tabJoueur.add(new JoueurPhysique(nom));
+				for(int i =1; i < nbrJoueur; i++) {
+					tabJoueur.add(new JoueurVirtuel("IA-"+i, difficulte));
+				}
+				reglePartie = new RegleSpecial02();
+				reglePartie.deroulementPartie(tabJoueur, paquet);
+				break;
 		}
 		
 	}
@@ -48,10 +64,10 @@ public class Partie{
 				System.out.println("\\\\\\*************** ***** ** *** ***************///");
 				saisieValide = false;
 				try {
-					System.out.print("Quel est la regle de jeu ? : ");
+					System.out.print("Quel est la règle de jeu ? : ");
 					choice = sc.nextInt();
 					saisieValide = true;
-					if(choice > 2 || choice < 0) {
+					if(choice > 3 || choice < 0) {
 						InputNotDefined ind = new InputNotDefined("Ce choix n'est pas disponible");
 						throw ind;
 					}
@@ -193,6 +209,8 @@ public class Partie{
 						break;
 					}
 					int nbrJoueur = choisirNbrJoueur(sc);
+                    System.out.println(rulechoice);
+                    System.out.println(levelchoice);
 					if(rulechoice != 0 && levelchoice != null ) {
 						jeu.demarrerPartie(rulechoice, answer, levelchoice, nbrJoueur);
 					}

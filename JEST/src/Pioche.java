@@ -28,7 +28,7 @@ public class Pioche extends Paquet{
 					return;
 				}
 				Paquet mainJoueur = tabJoueur.get(i).getmain();
-				mainJoueur.cartes.add(super.cartes.remove(0));
+				mainJoueur.cartes.add(super.cartes.removeFirst());
 			}
 		}
 		

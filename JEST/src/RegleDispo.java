@@ -1,8 +1,9 @@
 
 public enum RegleDispo {
-	UN(1, "Regle standard"),
-	DEUX(2, "Regle ameliore"),
-	OUT(0, "Annuler la partie");
+	UN(1, "Règles standard"),
+	DEUX(2, "Première variante de règles"),
+    TROIS(3, "Deuxième variante de règles"),
+    OUT(0, "Annuler la partie");
 	
 	private int val;
 	private String title;
