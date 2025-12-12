@@ -33,8 +33,8 @@ public class RegleStandard implements Regle {
 				Collections.shuffle(pioche.cartes);
 				int nbrTrophy = (tabJoueur.size()%2)+1;
 				for(int i = 1;i <=nbrTrophy ; i++) {
-					trophy.cartes.add(pioche.cartes.remove(0));
-					trophy.cartes.get(i-1).setVisibility(true);
+                    trophy.cartes.add(pioche.cartes.remove(0));
+                    trophy.cartes.get(i - 1).setVisibility(true);
 				}
 			}else {
 				Collections.shuffle(piocheTemp.cartes);
@@ -78,8 +78,8 @@ public class RegleStandard implements Regle {
 				//On s'assure du suivant legitime
 					if(tabJoueur.get(nextOne).getHasTook()) {
 						nextOne = nextStarter(tabJoueur, nextOne, starter);
+                        nextOne = tabJoueur.get(nextOne).choisirOffre(tabJoueur, offreDispo(tabJoueur));
 					}
-					nextOne = tabJoueur.get(nextOne).choisirOffre(tabJoueur, offreDispo(tabJoueur));
 			}
 			
 			if(pioche.cartes.size() != 0) {
@@ -349,215 +349,217 @@ public class RegleStandard implements Regle {
 		//Valeur Best Jest 
 		int max = 0;
 		int countEgal = 0;
-		switch(condit) {
-			case "Highest ♠":
-				for(int i=0; i<tabJoueur.size(); i++) {
-					for(int j=0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
-						if(tabJoueur.get(i).jest.cartes.get(j).getColor() == "♠") {
-							if(tabJoueur.get(i).jest.cartes.get(j).getValue() > maxFace) {
-								maxFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
-								index = i;
-							}
-						}
-					}
-				}
-				break;
-			case "Highest ♣":
-				for(int i=0; i<tabJoueur.size(); i++) {
-					for(int j=0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
-						if(tabJoueur.get(i).jest.cartes.get(j).getColor() == "♣") {
-							if(maxFace < tabJoueur.get(i).jest.cartes.get(j).getValue()) {
-								maxFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
-								index = i;
-							}
-						}
-					}
-				}
-				break;
-			case "Highest ♦":
-				for(int i=0; i<tabJoueur.size(); i++) {
-					for(int j=0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
-						if(tabJoueur.get(i).jest.cartes.get(j).getColor() == "♦") {
-							if(tabJoueur.get(i).jest.cartes.get(j).getValue() > maxFace) {
-								maxFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
-								index = i;
-							}
-						}
-					}
-				}
-				break;
-			case "Highest ♥":
-				System.out.print("4-");
-				for(int i=0; i<tabJoueur.size(); i++) {
-					for(int j=0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
-						if(tabJoueur.get(i).jest.cartes.get(j).getColor() == "♥") {
-							if(tabJoueur.get(i).jest.cartes.get(j).getValue() > maxFace) {
-								maxFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
-								index = i;
-							}
-						}
-					}
-				}
-				break;
-			case "Lowest ♠":
-				for(int i=0; i<tabJoueur.size(); i++) {
-					for(int j=0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
-						if(tabJoueur.get(i).jest.cartes.get(j).getColor() == "♠") {
-							if(tabJoueur.get(i).jest.cartes.get(j).getValue() < minFace) {
-								minFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
-								index = i;
-							}
-						}
-					}
-				}
-				break;
-			case "Lowest ♣":
-				for(int i=0; i<tabJoueur.size(); i++) {
-					for(int j=0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
-						if(tabJoueur.get(i).jest.cartes.get(j).getColor() == "♣") {
-							if(tabJoueur.get(i).jest.cartes.get(j).getValue() < minFace) {
-								minFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
-								index = i;
-							}
-						}
-					}
-				}
-				break;
-			case "Lowest ♦":
-				for(int i=0; i<tabJoueur.size(); i++) {
-					for(int j=0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
-						if(tabJoueur.get(i).jest.cartes.get(j).getColor() == "♦") {
-							if(tabJoueur.get(i).jest.cartes.get(j).getValue() < minFace) {
-								minFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
-								index = i;
-							}
-						}
-					}
-				}
-				break;
-			case "Lowest ♥":
-				for(int i=0; i<tabJoueur.size(); i++) {
-					for(int j=0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
-						if(tabJoueur.get(i).jest.cartes.get(j).getColor() == "♥") {
-							if(tabJoueur.get(i).jest.cartes.get(j).getValue() < minFace) {
-								minFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
-								index = i;
-							}
-						}
-					}
-				}
-				break;
-			case "Majority 4":
-				for(int i=0; i<tabJoueur.size(); i++) {
-					count = 0;
-					for(int j=0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
-						if(tabJoueur.get(i).jest.cartes.get(j).getValue() == 4) {
-							count++;
-						}
-					}
-					if(count > n) {
-						n = count;
-						index =i;
-					}else if(count == n) {
-						if(count == 2) {
-							index = -1;
-							break;
-						}
-					}
-				}
-				break;
-			case "Majority 3":
-				for(int i=0; i<tabJoueur.size(); i++) {
-					count = 0;
-					for(int j=0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
-						if(tabJoueur.get(i).jest.cartes.get(j).getValue() == 3) {
-							count++;
-						}
-					}
-					if(count > n) {
-						n = count;
-						index =i;
-					}else if(count == n) {
-						if(count == 2) {
-							index = -1;
-							break;
-						}
-					}
-				}
-				break;
-			case "Majority 2":
-				for(int i=0; i<tabJoueur.size(); i++) {
-					count = 0;
-					for(int j=0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
-						if(tabJoueur.get(i).jest.cartes.get(j).getValue() == 2) {
-							count++;
-						}
-					}
-					if(count > n) {
-						n = count;
-						index =i;
-					}else if(count == n) {
-						if(count == 2) {
-							index = -1;
-							break;
-						}
-					}
-				}
-				break;
-			case "Joker":
-				index = -2;
-				for(int i=0; i<tabJoueur.size(); i++) {
-					for(int j=0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
-						if(tabJoueur.get(i).jest.cartes.get(j).getValue() == 0) {
-							index = i;
-						}
-					}
-				}
-				break;
-			case "Best Jest":
-				max = tabJoueur.get(0).score;
-				countEgal = 0;
-				for(int i=1; i<tabJoueur.size(); i++) {
-					if(max < tabJoueur.get(i).score) {
-						max = tabJoueur.get(i).score;
-						index = i;
-					}else if(max == tabJoueur.get(i).score ) {
-						countEgal++;
-					}
-				}
-				if(countEgal != 0) {
-					index = -1;
-				}
-				break;
-			case "Best Jest No Joke":
-				max = 0;
-				countEgal = 0;
-				int indexJoker =-1;
-				for(int i=0; i<tabJoueur.size(); i++) {
-					for(int j=0; j<tabJoueur.get(i).jest.cartes.size(); j++) {
-						if(tabJoueur.get(i).jest.cartes.get(j).getValue() == 0) {
-							indexJoker = i;
-						}
-					}
-				}
-				for(int i=0; i<tabJoueur.size(); i++) {
-					if(i == indexJoker) {
-						continue;
-					}
-					if(max < tabJoueur.get(i).score) {
-						max = tabJoueur.get(i).score;
-						index = i;
-					}else if(max == tabJoueur.get(i).score ) {
-						countEgal++;
-					}
-				}
-				if(countEgal != 0) {
-					index = -1;
-				}
-				break;
-			default: 
-				index =-2;
-		}
+        if(condit != null) {
+            switch (condit) {
+                case "Highest ♠":
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        for (int j = 0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
+                            if (tabJoueur.get(i).jest.cartes.get(j).getColor() == "♠") {
+                                if (tabJoueur.get(i).jest.cartes.get(j).getValue() > maxFace) {
+                                    maxFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
+                                    index = i;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Highest ♣":
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        for (int j = 0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
+                            if (tabJoueur.get(i).jest.cartes.get(j).getColor() == "♣") {
+                                if (maxFace < tabJoueur.get(i).jest.cartes.get(j).getValue()) {
+                                    maxFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
+                                    index = i;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Highest ♦":
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        for (int j = 0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
+                            if (tabJoueur.get(i).jest.cartes.get(j).getColor() == "♦") {
+                                if (tabJoueur.get(i).jest.cartes.get(j).getValue() > maxFace) {
+                                    maxFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
+                                    index = i;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Highest ♥":
+                    System.out.print("4-");
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        for (int j = 0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
+                            if (tabJoueur.get(i).jest.cartes.get(j).getColor() == "♥") {
+                                if (tabJoueur.get(i).jest.cartes.get(j).getValue() > maxFace) {
+                                    maxFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
+                                    index = i;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Lowest ♠":
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        for (int j = 0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
+                            if (tabJoueur.get(i).jest.cartes.get(j).getColor() == "♠") {
+                                if (tabJoueur.get(i).jest.cartes.get(j).getValue() < minFace) {
+                                    minFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
+                                    index = i;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Lowest ♣":
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        for (int j = 0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
+                            if (tabJoueur.get(i).jest.cartes.get(j).getColor() == "♣") {
+                                if (tabJoueur.get(i).jest.cartes.get(j).getValue() < minFace) {
+                                    minFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
+                                    index = i;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Lowest ♦":
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        for (int j = 0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
+                            if (tabJoueur.get(i).jest.cartes.get(j).getColor() == "♦") {
+                                if (tabJoueur.get(i).jest.cartes.get(j).getValue() < minFace) {
+                                    minFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
+                                    index = i;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Lowest ♥":
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        for (int j = 0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
+                            if (tabJoueur.get(i).jest.cartes.get(j).getColor() == "♥") {
+                                if (tabJoueur.get(i).jest.cartes.get(j).getValue() < minFace) {
+                                    minFace = tabJoueur.get(i).jest.cartes.get(j).getValue();
+                                    index = i;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "Majority 4":
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        count = 0;
+                        for (int j = 0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
+                            if (tabJoueur.get(i).jest.cartes.get(j).getValue() == 4) {
+                                count++;
+                            }
+                        }
+                        if (count > n) {
+                            n = count;
+                            index = i;
+                        } else if (count == n) {
+                            if (count == 2) {
+                                index = -1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                case "Majority 3":
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        count = 0;
+                        for (int j = 0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
+                            if (tabJoueur.get(i).jest.cartes.get(j).getValue() == 3) {
+                                count++;
+                            }
+                        }
+                        if (count > n) {
+                            n = count;
+                            index = i;
+                        } else if (count == n) {
+                            if (count == 2) {
+                                index = -1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                case "Majority 2":
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        count = 0;
+                        for (int j = 0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
+                            if (tabJoueur.get(i).jest.cartes.get(j).getValue() == 2) {
+                                count++;
+                            }
+                        }
+                        if (count > n) {
+                            n = count;
+                            index = i;
+                        } else if (count == n) {
+                            if (count == 2) {
+                                index = -1;
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                case "Joker":
+                    index = -2;
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        for (int j = 0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
+                            if (tabJoueur.get(i).jest.cartes.get(j).getValue() == 0) {
+                                index = i;
+                            }
+                        }
+                    }
+                    break;
+                case "Best Jest":
+                    max = tabJoueur.get(0).score;
+                    countEgal = 0;
+                    for (int i = 1; i < tabJoueur.size(); i++) {
+                        if (max < tabJoueur.get(i).score) {
+                            max = tabJoueur.get(i).score;
+                            index = i;
+                        } else if (max == tabJoueur.get(i).score) {
+                            countEgal++;
+                        }
+                    }
+                    if (countEgal != 0) {
+                        index = -1;
+                    }
+                    break;
+                case "Best Jest No Joke":
+                    max = 0;
+                    countEgal = 0;
+                    int indexJoker = -1;
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        for (int j = 0; j < tabJoueur.get(i).jest.cartes.size(); j++) {
+                            if (tabJoueur.get(i).jest.cartes.get(j).getValue() == 0) {
+                                indexJoker = i;
+                            }
+                        }
+                    }
+                    for (int i = 0; i < tabJoueur.size(); i++) {
+                        if (i == indexJoker) {
+                            continue;
+                        }
+                        if (max < tabJoueur.get(i).score) {
+                            max = tabJoueur.get(i).score;
+                            index = i;
+                        } else if (max == tabJoueur.get(i).score) {
+                            countEgal++;
+                        }
+                    }
+                    if (countEgal != 0) {
+                        index = -1;
+                    }
+                    break;
+                default:
+                    index = -2;
+            }
+        }
 		
 		return index;
 	}

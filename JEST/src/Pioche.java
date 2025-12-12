@@ -3,7 +3,7 @@ public class Pioche extends Paquet{
 	
 	public Pioche(String rule) {
 		switch (rule) {
-			case "simple":
+			case "simple", "avancee":
 				for(Couleur c : Couleur.values()) {
 					for(Valeur v : Valeur.values()) {
 						cartes.add(new Carte(v,c, rule));
@@ -11,7 +11,7 @@ public class Pioche extends Paquet{
 				}
 				cartes.add(new Carte());
 				break;
-			case "temporaire":
+            case "temporaire":
 				break;
 		}
 		
