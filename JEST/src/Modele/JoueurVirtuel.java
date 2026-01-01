@@ -1,8 +1,13 @@
+package Modele;
 import java.util.List;
 
 public class JoueurVirtuel extends Joueur{
 
 	private Strategie strategie;
+	
+	public Paquet getOffre() {
+		return offre;
+	}
 	
 	public JoueurVirtuel(String nom,String strategieName){
 		super(nom);

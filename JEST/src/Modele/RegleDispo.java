@@ -1,3 +1,4 @@
+package Modele;
 
 public enum RegleDispo {
 	UN(1, "Règles standard"),

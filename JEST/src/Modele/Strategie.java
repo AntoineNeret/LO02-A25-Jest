@@ -1,3 +1,4 @@
+package Modele;
 import java.util.*;
 
 public interface Strategie {

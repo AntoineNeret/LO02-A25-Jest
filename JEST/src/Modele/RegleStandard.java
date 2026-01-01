@@ -1,3 +1,4 @@
+package Modele;
 import java.util.*;
 
 public class RegleStandard implements Regle {
@@ -5,15 +6,83 @@ public class RegleStandard implements Regle {
 	private static Scanner sc = new Scanner(System.in);
 	private VisitorScore compteur;
 	
+
+    public void initCompteur() {
+    	compteur = this.Visiteur();
+    }
+    
+    public void recupPaquet(Pioche pioche) {
+		for(Carte c : pioche.cartes) { 
+			c.setVisibility(false);
+		}
+    }
+    
+    public void melanger(ArrayList<Joueur> tabJoueur,int tour,Pioche pioche, Paquet trophy,Pioche piocheTemp) {
+		if(tour == 1) {
+			Collections.shuffle(pioche.cartes);
+			int nbrTrophy = (tabJoueur.size()%2)+1;
+			for(int i = 1;i <=nbrTrophy ; i++) {
+                trophy.cartes.add(pioche.cartes.remove(0));
+                trophy.cartes.get(i - 1).setVisibility(true);
+			}
+		}else {
+			Collections.shuffle(piocheTemp.cartes);
+		}
+    }
+    
+    public void distribution(ArrayList<Joueur> tabJoueur,int tour,Pioche pioche,Pioche piocheTemp) {
+		if(tour == 1) {
+			pioche.distribuer(tabJoueur, 2);
+		}else {
+			piocheTemp.distribuer(tabJoueur, 2);
+		}
+    }
+    
+    public void reinitAPrisOffre(ArrayList<Joueur> tabJoueur) {
+        for(Joueur j : tabJoueur) {
+            j.setHasTook(false);
+        }
+    }
+    
+    public void gererOffres(ArrayList<Joueur> tabJoueur, Pioche pioche, Pioche piocheTemp) {
+
+
+		int starter;
+		int nextOne;
+		
+		//Comparaison des cartes des offres
+		starter = leStarter(tabJoueur);
+		
+		//Choix de l'offre
+		nextOne = tabJoueur.get(starter).choisirOffre(tabJoueur, offreDispo(tabJoueur));
+		for(int i = 0; i<tabJoueur.size()-1; i++) {
+			//On s'assure du suivant legitime
+				if(tabJoueur.get(nextOne).getHasTook()) {
+					nextOne = nextStarter(tabJoueur, nextOne, starter);
+                    nextOne = tabJoueur.get(nextOne).choisirOffre(tabJoueur, offreDispo(tabJoueur));
+				}
+		}
+		
+		if(pioche.cartes.size() != 0) {
+			piocheTemp.recuperer(tabJoueur);
+			for(int i = 0; i < tabJoueur.size(); i++) {
+				piocheTemp.ajouterCarte(pioche.cartes.remove(0));
+			}
+		}else {
+			for(int i = 0; i < tabJoueur.size(); i++) {
+				tabJoueur.get(i).jest.cartes.add(tabJoueur.get(i).offre.cartes.remove(0));
+			}
+		}
+    }
+	
 	public void deroulementPartie(List<Joueur> tabJoueur, Paquet paquet) {
 		//Initialisation du compteur de jeu
 		compteur = this.Visiteur();
 		
 		//Recuperation du paquet
 		Pioche pioche = (Pioche) paquet;
-		for(Carte c : pioche.cartes) { 
-			c.setVisibility(false);
-		}
+        recupPaquet(pioche);
+		
 		//Compteur de tour
 		int tour = 1;
 		//Declaration des trophees
@@ -28,17 +97,7 @@ public class RegleStandard implements Regle {
 			}
 			
 			//melange des cartes
-			
-			if(tour == 1) {
-				Collections.shuffle(pioche.cartes);
-				int nbrTrophy = (tabJoueur.size()%2)+1;
-				for(int i = 1;i <=nbrTrophy ; i++) {
-                    trophy.cartes.add(pioche.cartes.remove(0));
-                    trophy.cartes.get(i - 1).setVisibility(true);
-				}
-			}else {
-				Collections.shuffle(piocheTemp.cartes);
-			}
+            melanger((ArrayList<Joueur>) tabJoueur,tour,pioche,trophy,piocheTemp);
 			
 			
 			System.out.print("\n** Trophee de jeu ** : ");
@@ -48,16 +107,11 @@ public class RegleStandard implements Regle {
 
 			
 			//Distribution des cartes a chaque joueur
-			if(tour == 1) {
-				pioche.distribuer(tabJoueur, 2);
-			}else {
-				piocheTemp.distribuer(tabJoueur, 2);
-			}
+            distribution(tabJoueur,tour,pioche,piocheTemp);
 			
 			//Aucun joueur n'a choisi une offre
-			for(Joueur j : tabJoueur) {
-				j.setHasTook(false);
-			}
+            reinitAPrisOffre(tabJoueur);
+
 			
 			//Procede par tour de jeu 
 			//En ce qui concerne le joueur
@@ -66,32 +120,9 @@ public class RegleStandard implements Regle {
 				tabJoueur.get(i).offre = tabJoueur.get(i).faireOffre();
 			}
 			
-			int starter;
-			int nextOne;
-			
-			//Comparaison des cartes des offres
-			starter = leStarter(tabJoueur);
-			
-			//Choix de l'offre
-			nextOne = tabJoueur.get(starter).choisirOffre(tabJoueur, offreDispo(tabJoueur));
-			for(int i = 0; i<tabJoueur.size()-1; i++) {
-				//On s'assure du suivant legitime
-					if(tabJoueur.get(nextOne).getHasTook()) {
-						nextOne = nextStarter(tabJoueur, nextOne, starter);
-                        nextOne = tabJoueur.get(nextOne).choisirOffre(tabJoueur, offreDispo(tabJoueur));
-					}
-			}
-			
-			if(pioche.cartes.size() != 0) {
-				piocheTemp.recuperer(tabJoueur);
-				for(int i = 0; i < tabJoueur.size(); i++) {
-					piocheTemp.ajouterCarte(pioche.cartes.remove(0));
-				}
-			}else {
-				for(int i = 0; i < tabJoueur.size(); i++) {
-					tabJoueur.get(i).jest.cartes.add(tabJoueur.get(i).offre.cartes.remove(0));
-				}
-			}
+            gererOffres(tabJoueur,pioche,piocheTemp);
+            
+            
 			System.out.println("************** Fin du tour " + tour + " *************");
 			
 			//prompt des resultat du tour

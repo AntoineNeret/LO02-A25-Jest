@@ -1,3 +1,4 @@
+package Modele;
 
 public class CarteExtension extends Carte{
 	private String effetCarte;

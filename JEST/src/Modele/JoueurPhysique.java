@@ -1,7 +1,12 @@
+package Modele;
 import java.util.*;
 public class JoueurPhysique extends Joueur{
 	
 	private static Scanner sc = new Scanner(System.in);
+	
+	public Paquet getOffre() {
+		return offre;
+	}
 	
 	public int choisirOffre(List<Joueur> tabJoueur, int nbrOffre) {
 		//Scanner sc = new Scanner(System.in);
@@ -13,7 +18,7 @@ public class JoueurPhysique extends Joueur{
 			int value =1;
 			do {
 				int i = 0;
-				System.out.println("\n*************** Offres des joeurs ***************");
+				System.out.println("\n*************** Offres des joueurs ***************");
 				for(i =1; i < tabJoueur.size(); i++) {
 					if(tabJoueur.get(i).offre.cartes.size() == 2) {
 						System.out.println((value) + ". " + tabJoueur.get(i).getName() + " Offre -> " + tabJoueur.get(i).offre.cartes);

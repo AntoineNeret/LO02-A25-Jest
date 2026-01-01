@@ -1,3 +1,4 @@
+package Modele;
 import java.util.*;
 public class Paquet {
 
@@ -9,6 +10,10 @@ public class Paquet {
 	
 	public void retirerCarte(Carte c) {
 		
+	}
+	
+	public List<Carte> getCartes(){
+		return cartes;
 	}
 	
 	

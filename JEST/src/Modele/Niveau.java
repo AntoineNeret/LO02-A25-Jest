@@ -1,3 +1,4 @@
+package Modele;
 
 public enum Niveau {
 	UN(1, "Strategie Simple"),

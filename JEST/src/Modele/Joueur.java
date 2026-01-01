@@ -1,3 +1,4 @@
+package Modele;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +10,15 @@ public abstract class Joueur {
 	protected Paquet jest;
 	protected Paquet main;
 	protected boolean hasTook;
-	protected Paquet offre;
+	public Paquet offre;
 	
 	public abstract int choisirOffre(List<Joueur> tabJoueur, int nbrOffre);
 	
 	public abstract Paquet faireOffre();
+	
+	public Paquet getOffre() {
+		return offre;
+	}
 	
 	public void accepter(VisitorScore compteur) {
 		this.score = compteur.visiter(this);

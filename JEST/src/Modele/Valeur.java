@@ -1,3 +1,4 @@
+package Modele;
 
 public enum Valeur {
 	QUATRE(4),
